@@ -681,6 +681,17 @@ body::before{content:"";position:fixed;inset:0;background-image:url("data:image/
         </div>
       </div>
 
+      <div class="a-section">Version</div>
+      <div class="a-block">
+        <div class="a-row">
+          <div><div class="a-label">Version Number</div><div class="a-desc">Shown in the Settings &rsaquo; Info section of the site. Stored in the database and overrides the default.</div></div>
+          <div class="form-row">
+            <input class="a-input" id="set-version" placeholder="1.0.0" style="max-width:160px"/>
+            <button class="a-btn primary" onclick="saveVersion()">Save Version</button>
+          </div>
+        </div>
+      </div>
+
       <div class="a-section">Maintenance Mode</div>
       <div class="a-block">
         <div class="a-row">
@@ -1593,8 +1604,22 @@ async function loadSettings() {
       document.getElementById('maint-toggle').checked = !!s.maintenanceMode;
     }
     renderWebhooks(s.webhooks || []);
+    // Load current version from DB via public /api/info
+    try {
+      const info = await fetch('/api/info?_=' + Date.now()).then(r=>r.json());
+      const vEl = document.getElementById('set-version');
+      if (vEl) vEl.value = info.version || '';
+    } catch {}
   } catch {}
 }
+window.saveVersion = async function() {
+  const ver = document.getElementById('set-version').value.trim();
+  if (!ver) { toast('Enter a version number','red'); return; }
+  try {
+    await api('POST','/api/admin/version',{ version: ver });
+    toast('Version updated to ' + ver,'green');
+  } catch(e) { toast(e.message,'red'); }
+};
 window.saveBranding = async function() {
   try {
     await api('POST','/api/settings',{
