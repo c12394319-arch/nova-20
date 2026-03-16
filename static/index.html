@@ -399,7 +399,7 @@
 			.catch(function() {});
 
 		// ── About / Info ─────────────────────────────────────────────
-		fetch('/info.json?_=' + Date.now())
+		fetch('/api/info?_=' + Date.now())
 			.then(function(r) { return r.json(); })
 			.then(function(info) {
 				var logo    = document.getElementById('about-logo');
