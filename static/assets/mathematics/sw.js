@@ -143,7 +143,7 @@ class UVServiceWorker extends EventEmitter {
     for (const e in r) t[e.toLowerCase()] = r[e];
     return {
       headers: t,
-      status: +e.headers.get("x-bare-status"),
+      status: Math.max(200, Math.min(599, +e.headers.get("x-bare-status") || 200)),
       statusText: e.headers.get("x-bare-status-text"),
       body: this.statusCode.empty.includes(+e.headers.get("x-bare-status"))
         ? null
