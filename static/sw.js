@@ -21,8 +21,8 @@ self.addEventListener("fetch", (event) => {
         const ct = res.headers.get("content-type") || "";
         if (ct.includes("text/html")) {
           try {
-            const status = res.status || 200;
-            if (status < 200 || status > 599) return res;
+            const status = (res.status && res.status >= 200 && res.status <= 599) ? res.status : 200;
+            if (!res.status || res.status < 200 || res.status > 599) return res;
             const text = await res.text();
             const patched = text.replace(/\s+target\s*=\s*["']_blank["']/gi, ' target="_self"');
             const headers = new Headers(res.headers);
