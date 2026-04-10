@@ -3,7 +3,7 @@
 // Changing these would break existing sessions and cached service workers.
 self.__uv$config = {
   prefix: "/a/",
-  bare: "https://YOUR-BARE-SERVER.railway.app/",
+  bare: "https://uv.holyubofficial.net/",
   encodeUrl: Ultraviolet.codec.xor.encode,
   decodeUrl: Ultraviolet.codec.xor.decode,
   handler: "/assets/mathematics/handler.js?v=9-30-2024",
