@@ -5,7 +5,7 @@ self.__dynamic$config = {
 	logLevel: 0,
 	bare: {
 		version: 2,
-		path: "/ca/",
+		path: "https://YOUR-BARE-SERVER.railway.app/",
 	},
 	tab: {
 		title: null,
